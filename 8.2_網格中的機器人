@@ -1,44 +1,58 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 
 class Robot{
   private:
     std::unordered_map<int,std::vector<int>> m_map;
-    std::vector<std::vector<int>> dir = { {0,1},{1,0} };
+    //std::vector<std::vector<int>> dir;
     int m_row;
     int m_column;
-    std::vector<int> m_start{0,0};
-    std::vector<int> m_end;
-    int count{0};
+    //std::vector<int> m_start;
+    //std::vector<int> m_end;
+    int m_rowEnd;
+    int m_columnEnd;
+    int count;
     
   public:
     Robot(int r,int c,std::unordered_map<int,std::vector<int>> map):m_row{r},m_column{c},m_map{map}
-     { m_end = {m_row-1, m_column-1}; count = 0; dir = { {0,1},{1,0} }; }
+     { 
+       //m_end = {r-1, c-1};//m_end = {m_row-1, m_column-1};
+       m_rowEnd = r-1;
+       m_columnEnd = c-1;
+       count = 0; 
+       //dir = { {0,1},{1,0} }; 
+    }
   
-    void findAllPath(int x,int y){
-      if(x==m_end[0] && y==m_end[1]){ count++; return; }
+    void findAllPath(int m,int n,int& num){
+      if(m>=m_row || n >=m_column || m <0 || n<0){return; }
+      if(m==m_rowEnd && n==m_columnEnd){ num+=1; return; }
       
-      if(std::find(m_map[x].begin(),m_map[x].end(),y)!=m_map[x].end()){ return; }
+      if(std::find(m_map[m].begin(),m_map[m].end(),n)!=m_map[m].end()){ return; }
       
-      for(auto d:dir){
-        findAllPath(x+d[0],y+d[1]);
-      }
+      //for(auto d:dir){
+      //  findAllPath(m+d[0],n+d[1],num);
+      //}
+      findAllPath(m,n+1,num);
+      findAllPath(m+1,n,num);
+      count = num;
     }
-    
-    int findAllPath(){
-      findAllPath(m_start[0],m_start[1]);
-      return count;
-    }
+    int getCount(){ return count; }
+    /*int AllPath(){
+      int num{0};
+      findAllPath(0,0,num);
+      return num;
+    }*/
 };
 
 int main(){
-  std::unordered_map<int,std::vector<int>> map;
-  map[0].puch_back(2);
-  map[1].puch_back(1);
-  map[2].puch_back(0);
-  
+  std::unordered_map<int,std::vector<int>> map = { {0,{2}}, {1,{}}, {2,{0}} }; 
   Robot robot{3,3,map};
-  std::cout<< "All Path: " << robot.findAllPath() << std::endl;
+
+      int num{0};
+      robot.findAllPath(0,0,num);
+  
+  std::cout<< "All Path: " << robot.getCount() << std::endl;
   return 0;
 }
