@@ -19,8 +19,16 @@ class Robot{
     void findAllPath(int x,int y){
       if(x==m_end[0] && y==m_end[1]){ count++; return; }
       
-      if()
+      if(std::find(m_map[x].begin(),m_map[x].end(),y)!=m_map[x].end()){ return; }
       
+      for(auto d:dir){
+        findAllPath(x+d[0],y+d[1]);
+      }
+    }
+    
+    int findAllPath(){
+      findAllPath(m_start[0],m_start[1]);
+      return count;
     }
 };
 
@@ -30,6 +38,7 @@ int main(){
   map[1].puch_back(1);
   map[2].puch_back(0);
   
-  Robot{3,3,map};
+  Robot robot{3,3,map};
+  std::cout<< "All Path: " << robot.findAllPath() << std::endl;
   return 0;
 }
