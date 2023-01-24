@@ -6,6 +6,8 @@ class Stairs{
     std::unordered_map<int,int> m_map;
     int n;
   public:
+    Stairs(int num,std::unordered_map<int,int> map):n{num},m_map{map}
+    {}
     
     int jump(int n){
       if(n<0){ return 0; }
@@ -16,16 +18,19 @@ class Stairs{
       m_map[n] =  jump(n-1)+jump(n-2)+jump(n-3);
       return m_map[n];
     }
-    
+
+    void getJumpCount(){
+      std::cout << "n = "<< n << ", count = " << jump(n) <<std::endl;
+    }
 };
 
 int main(){
-  Stairs s;
-  int n{4};
-  std::cout<<"n = "<< n << ", count = " << s.jump(n) <<std::endl;
+  std::unordered_map<int,int> map;
+  Stairs s{4,map};  
+  s.getJumpCount();
   return 0;
 }
-
+-----------------------------------------------------------------------------------------
 /*
 #include <iostream>
 
