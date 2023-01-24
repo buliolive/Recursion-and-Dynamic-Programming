@@ -1,0 +1,65 @@
+#include <iostream>
+#include <unordered_map>
+
+class Stairs{
+  private:  
+    std::unordered_map<int,int> m_map;
+    int n;
+  public:
+    
+    int jump(int n){
+      if(n<0){ return 0; }
+      if(n==0){ return 1; }
+
+      if(m_map.find(n)!=m_map.end()){ return m_map[n]; }
+
+      m_map[n] =  jump(n-1)+jump(n-2)+jump(n-3);
+      return m_map[n];
+    }
+    
+};
+
+int main(){
+  Stairs s;
+  int n{4};
+  std::cout<<"n = "<< n << ", count = " << s.jump(n) <<std::endl;
+  return 0;
+}
+
+/*
+#include <iostream>
+
+int jump(int n){
+  if(n<0){ return 0; }
+  if(n==0){ return 1; }
+
+  return jump(n-1)+jump(n-2)+jump(n-3);
+}
+
+int main(){
+  int n{3};
+  std::cout<<"n = "<< n << ", count = " << jump(n) <<std::endl;
+  return 0;
+}
+*/
+
+/*
+#include <iostream>
+
+void jump(int n, int& count){
+  if(n==0 || n==1){ count++; return; }
+
+  if(n>=1){ jump(n-1,count); }
+  if(n>=2){ jump(n-2,count); }
+  if(n>=3){ jump(n-3,count); }
+  //return count;
+}
+
+int main(){
+  int count{0};
+  int n{3};
+  jump(n,count);
+  std::cout<<"n = "<< n << ", count = " << count <<std::endl;
+  return 0;
+}
+*/
