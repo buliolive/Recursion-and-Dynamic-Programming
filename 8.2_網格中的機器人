@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+class Robot{
+  private:
+    std::unordered_map<int,std::vector<int>> m_map;
+    std::vector<std::vector<int>> dir = { {0,1},{1,0} };
+    int m_row;
+    int m_column;
+    std::vector<int> m_start{0,0};
+    std::vector<int> m_end;
+    int count{0};
+    
+  public:
+    Robot(int r,int c,std::unordered_map<int,std::vector<int>> map):m_row{r},m_column{c},m_map{map}
+     { m_end = {m_row-1, m_column-1}; count = 0; dir = { {0,1},{1,0} }; }
+  
+    void findAllPath(int x,int y){
+      if(x==m_end[0] && y==m_end[1]){ count++; return; }
+      
+      if()
+      
+    }
+};
+
+int main(){
+  std::unordered_map<int,std::vector<int>> map;
+  map[0].puch_back(2);
+  map[1].puch_back(1);
+  map[2].puch_back(0);
+  
+  Robot{3,3,map};
+  return 0;
+}
