@@ -1,0 +1,31 @@
+//要注意“空集合”也算一個集合！！！！
+
+#include <iostream>
+#include <vector>
+
+void subSet(int x, std::vector<std::vector<int>>& union){
+  for(auto vec:union){
+    std::vector<int> temp = vec;
+    vector.push_back( temp.push_back(x) );
+  }
+  union.push_back(x);
+}
+
+std::vector<std::vector<int>> findAllSubset(std::vector<int>& vector){
+  std::vector<std::vector<int>> ans{};
+  for(auto i:vector){ 
+    subSet(i,ans);
+  }
+  ans.push_back({});
+  return ans;
+}
+
+int main(){
+  std::vector<int> vector = {0,1,2,3};
+  std::vector<std::vector<int>> ans = findAllSubset(vector);
+  for(auto vec:ans){
+    for(auto i:vec){ std::cout<<i<<" "; }
+    std::cout<<std::endl;
+  }
+  return 0;
+}
