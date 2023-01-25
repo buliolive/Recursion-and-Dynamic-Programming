@@ -3,12 +3,17 @@
 #include <iostream>
 #include <vector>
 
-void subSet(int x, std::vector<std::vector<int>>& union){
-  for(auto vec:union){
-    std::vector<int> temp = vec;
-    vector.push_back( temp.push_back(x) );
+void subSet(int x, std::vector<std::vector<int>>& matrix){
+  if((int)matrix.size()!=0){
+    std::vector<std::vector<int>> addVec{};
+    for(auto vec:matrix){
+      std::vector<int> temp = vec;
+      temp.push_back(x);
+      addVec.push_back( temp );
+    }
+    for(auto i:addVec){ matrix.push_back(i); }
   }
-  union.push_back(x);
+  matrix.push_back({x});
 }
 
 std::vector<std::vector<int>> findAllSubset(std::vector<int>& vector){
@@ -21,7 +26,7 @@ std::vector<std::vector<int>> findAllSubset(std::vector<int>& vector){
 }
 
 int main(){
-  std::vector<int> vector = {0,1,2,3};
+  std::vector<int> vector = {0,1,2};
   std::vector<std::vector<int>> ans = findAllSubset(vector);
   for(auto vec:ans){
     for(auto i:vec){ std::cout<<i<<" "; }
@@ -29,3 +34,4 @@ int main(){
   }
   return 0;
 }
+
