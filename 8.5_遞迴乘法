@@ -1,5 +1,33 @@
 #include <iostream>
 
+int multiAB(int a,int b){
+  int ans{0};
+  
+  if(a==2){ return b; }
+  
+  int temp = multiAB(a/2,b);
+  ans = ans + temp + temp;
+  
+  return ans;
+}
+
 int main(){
+  int a{7}; int b{9};
+  int ans{0};
+  
+  if(a%2==0 && b%2==0){ 
+    if(a>b){ ans = multiAB(b,a); }
+    else{ ans = multiAB(a,b); }
+  }
+  else if(a%2==1 && b%2==1){
+    if(a>b){ ans = b+multiAB(b-1,a); }
+    else{ ans = a+multiAB(a-1,b); }
+  }
+  else{
+    if(a%2==0){ ans = multiAB(a,b); }
+    else if(b%2==0){ ans = multiAB(b,a); }
+  }
+    
+  std::cout<< a << "*" << b <<" = "<< ans << std::endl;
   return 0;
 }
