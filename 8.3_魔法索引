@@ -1,3 +1,68 @@
+//更簡潔的做法
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+class MagicIndex{
+  private:
+    std::vector<int> m_vector;
+    std::vector<int> m_output;
+    int m_vecSize;
+    int m_uplimit;
+    int m_lowlimit;
+
+  public:
+    MagicIndex(std::vector<int> vector):m_vector{vector}
+    {  
+      m_output = {};
+      m_vecSize = static_cast<int>( m_vector.size() );
+      m_lowlimit = 0;
+      m_uplimit = m_vecSize-1;
+    }
+
+    void findMagicIndex(int uplimit,int lowlimit){
+      if(lowlimit>uplimit || lowlimit<m_lowlimit || uplimit>m_uplimit){ return; }
+      int mid = lowlimit+((uplimit-lowlimit+1)/2);
+      if( m_vector[mid]==mid ){ m_output.push_back(mid); }
+
+
+      //findMagicIndex(mid-1 ,lowlimit);
+      //findMagicIndex(uplimit ,mid+1);
+
+      if(m_vector[mid]<mid){ 
+        findMagicIndex(m_vector[mid] ,lowlimit);
+        findMagicIndex(uplimit ,mid+1);
+      }
+      if(m_vector[mid]>mid){ 
+        findMagicIndex(mid-1 ,lowlimit);
+        findMagicIndex(uplimit ,m_vector[mid]); 
+      }
+    }
+    
+    std::vector<int> getMagicIndex(){
+      return m_output;
+    }
+};
+
+int main(){
+  std::vector<int> vector = {-10,-5,2,2,2,3,4,7,9,12,13};
+  
+  //std::vector<int> vector = {-40,-20,-1,1,2,3,6,7,9,12,13};
+  int vecSize{(int)vector.size()};
+  MagicIndex magic{vector};
+  magic.findMagicIndex(vecSize-1,0);
+  std::vector<int> ans = magic.getMagicIndex();
+  std::sort(ans.begin(),ans.end());
+  for(auto i:ans){
+    std::cout << i << " ";
+  }
+  std::cout << std::endl;
+  
+  return 0;
+}
+
+-----------------------------------------------------------------------------
+//直觀解法（但有更快的）
 #include <iostream>
 #include <vector>
 #include <algorithm>
