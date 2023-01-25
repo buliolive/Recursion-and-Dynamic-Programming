@@ -1,5 +1,38 @@
 //要注意“空集合”也算一個集合！！！！
+//下面兩個方法時間複雜度與空間複雜度皆為O(N*2^N)
 
+
+#include <iostream>
+#include <vector>
+
+std::vector<std::vector<int>> findAllSubset(int idx,std::vector<int>& vector){
+  std::vector<std::vector<int>> ans{};
+  if(idx>=(int)vector.size()){ ans.push_back({}); return ans; }
+
+  ans = findAllSubset(idx+1, vector);
+  int x = vector[idx];
+  std::vector<std::vector<int>> temp{};
+  for(auto vec:ans){ 
+    std::vector<int> v = vec;
+    v.push_back(x);
+    temp.push_back(v);
+  }
+ 
+  //for(auto i:temp){ ans.push_back(i); }
+  ans.insert(ans.end(),temp.begin(),temp.end());
+  return ans;
+}   
+
+int main(){
+  std::vector<int> vector = {0,1,2};
+  std::vector<std::vector<int>> ans = findAllSubset(0,vector);
+  for(auto vec:ans){
+    for(auto i:vec){ std::cout<<i<<" "; }
+    std::cout<<std::endl;
+  }
+  return 0;
+}
+-----------------------------------------------------------------
 #include <iostream>
 #include <vector>
 
