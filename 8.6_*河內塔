@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+
+class TowerOfHanoi{
+  private:
+    int m_N;
+    int m_number;
+    std::vector<std::stack<int>> m_tower;
+    
+  public:
+    TowerOfHanoi(int n,int num):m_N{n},m_number{num}
+    {
+      m_tower.resize(m_number);
+      for(int i=m_N;i>0;i--){ m_tower[0].push(i); }
+    }
+    
+    void print(){
+      for(int i=1;i<=m_number;i++){
+        std::cout<<"Tower "<< i <<" : ";
+        std::stack<int> s = m_tower[i-1];
+        while(!s.empty()){
+          std::cout<< s.top() << " ";
+          s.pop();
+        }
+        std::cout<< std::endl;
+      }
+      std::cout<< std::endl;
+    }
+    
+    void moveTop(std::stack<int> origin,std::stack<int> destination){
+      int x = origin.top();
+      destination.push(x);
+    }
+    
+    void moveDisks(int x,std::stack<int> origin, std::stack<int> destination, std::stack<int> buffer){
+      if(x<=0){ return; }
+      
+        moveDisks(x-1,origin,buffer,destination);
+        moveTop(origin,destination);
+        moveDisks(x-1,buffer,destination,origin);
+      
+    }
+    
+    void TowerHanoi(){
+      moveDisks(m_N, m_tower[0], m_tower[2], m_tower[1]);
+    }
+    
+};
+
+int main(){
+  int N{10};
+  int tower{3};
+  TowerOfHanoi T{N,tower};
+  T.print();
+  T.TowerHanoi();
+  T.print();
+  
+  return 0;
+}
