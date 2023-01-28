@@ -10,8 +10,9 @@ int count(int length,std::string s){
 }
 
 int main(){
-  std::string str = "abc";
-  int len{static_cast<int>(str)};
+  std::string str = "abcd";
+  int len{static_cast<int>(str.length())};
   int ans = count(len,str);
+  std::cout<<ans<<std::endl;
   return 0;
 }
