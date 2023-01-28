@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+void count(int idx,std::string s,std::vector<std::string>& ans){
+  int len{static_cast<int>(s.length())};
+  if(len==0 || idx>=len){return;}
+
+  if((int)ans.size()==0){ans.push_back("");}
+
+  char temp = s[idx];
+  //std::string temp = s.substr(idx,idx); 
+  //std::cout<< temp <<std::endl;
+  //if((int)ans.size()==0){ ans.push_back(temp); }
+  //else{ 
+    std::vector<std::string> vec{};
+    for(auto str:ans){
+      for(int i=0;i<=(int)str.length();i++){
+        if(i==0){ vec.push_back(temp+str); }
+        else if(i==(int)str.length()){ vec.push_back(str+temp); }
+        else{
+          std::string ss = str.substr(0,i) + temp + str.substr(i,((int)str.length())-1);
+          vec.push_back(ss);
+        }
+      }
+      //vec.push_back(temp+str); vec.push_back(str+temp);
+    } 
+    ans = vec;
+  //}
+  //for(auto i:ans){i.append(temp);}
+  
+  count(idx+1,s,ans);
+}
+
+int main(){
+  std::string str = "abcd";
+  int len{static_cast<int>(str.length())};
+  std::vector<std::string> ans{};
+  count(0,str,ans);
+  for(auto s:ans){ std::cout<<s<<", "; }
+  std::cout<<std::endl;
+  return 0;
+}
+-------------------------------------------------------------
+
+#include <iostream>
+#include <string>
+
+int count(int length,std::string s){
+  int len{static_cast<int>(s.length())};
+  if(length==0 && len==0){return 0;}
+  if(length==1){return 1;}
+  
+  return count(length-1,s)*length;
+}
+
+int main(){
+  std::string str = "abcd";
+  int len{static_cast<int>(str.length())};
+  int ans = count(len,str);
+  std::cout<<ans<<std::endl;
+  return 0;
+}
