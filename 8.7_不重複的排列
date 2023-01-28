@@ -1,0 +1,17 @@
+#include <iostream>
+#include <string>
+
+int count(int length,std::string s){
+  int len{static_cast<int>(s.length())};
+  if(length==0 && len==0){return 0;}
+  if(length==1){return 1;}
+  
+  return count(length-1,s)*length;
+}
+
+int main(){
+  std::string str = "abc";
+  int len{static_cast<int>(str)};
+  int ans = count(len,str);
+  return 0;
+}
