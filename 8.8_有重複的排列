@@ -8,16 +8,18 @@ std::vector<std::string> classification(std::string str){
   if((int)str.length()==0){ return output; }
   
   int start  =0;
-  std::string s = str.substr(start,1);
+  std::string s = ""; s = s+str.at(start) ;
   for(int i=1;i<(int)str.length();i++){
     if(str.at(start)==str.at(i)){ s = s+ str.at(i); }
     else{ 
       output.push_back(s); 
       s.clear();
       start = i; 
-      s = str.substr(start,1);
+      s = s + str.at(start);
     }
   }
+  output.push_back(s); 
+  s.clear();
   
   std::cout<< str << " : " ;
   for(auto o:output){ std::cout << o << ", "; }
