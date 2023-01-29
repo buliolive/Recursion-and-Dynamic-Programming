@@ -13,71 +13,32 @@ std::unordered_map<char,int> builtMap(std::string str){
   return map;
 }
 
+void getPerm(std::unordered_map<char,int> map, std::string s, int len,std::vector<std::string>& result){
+  if(len==0){result.push_back(s); return;}
 
+  for(auto it=map.begin();it!=map.end(); it++){
+    char c = (*it).first;
 
-#include <iostream>
-#include <vector>
-#include <string>
+    if((*it).second>0){
+      int num = map[c]; map[c] = num-1;
 
-std::vector<std::string> classification(std::string str){
-  std::vector<std::string> output{};
-  
-  if((int)str.length()==0){ return output; }
-  
-  int start  =0;
-  std::string s = ""; s = s+str.at(start) ;
-  for(int i=1;i<(int)str.length();i++){
-    if(str.at(start)==str.at(i)){ s = s+ str.at(i); }
-    else{ 
-      output.push_back(s); 
-      s.clear();
-      start = i; 
-      s = s + str.at(start);
-    }
-  }
-  output.push_back(s); 
-  s.clear();
-  
-  std::cout<< str << " : " ;
-  for(auto o:output){ std::cout << o << ", "; }
-  std::cout<< std::endl;
-  return output;
-}
+      getPerm(map,s+c,len-1,result);
+      //for(auto str:output){ str = c+str; }
 
-void count(int idx,std::vector<std::string> input,std::vector<std::string>& ans){
-  int len{(int)input.size()};
-  if(len==0 || idx>=len){ return; }
-
-  if((int)ans.size()==0){ ans.push_back(""); }
-
-  std::string temp = input[idx];
-  std::vector<std::string> vec{};
-    for(auto str:ans){
-      for(int i=0;i<=(int)str.length();i++){
-        if(i==0){ vec.push_back(temp+str); }
-        else if(i==(int)str.length()){ vec.push_back(str+temp); }
-        else{
-          std::string ss = str.substr(0,i) + temp + str.substr(i,((int)str.length())-1);
-          vec.push_back(ss);
-        }
-      }
+      int count = map[c]; map[c] = count+1;
     } 
-    ans = vec;
-
-  count(idx+1,input,ans);
+    
+  }
+   
 }
-
-
 
 int main(){
-  std::string str = "aabccc";
-  int len{static_cast<int>(str.length())};
+  std::string str = "aab";
+  std::unordered_map<char,int> map = builtMap(str);
   std::vector<std::string> output{};
-  output = classification(str);
-
-  std::vector<std::string> ans{};
-  count(0,output,ans);
-  for(auto s:ans){ std::cout<<s<<", "; }
+ 
+  getPerm(map,"",(int)str.length(),output);
+  for(auto s:output){ std::cout<<s<<", "; }
   std::cout<<std::endl;
   
   return 0;
