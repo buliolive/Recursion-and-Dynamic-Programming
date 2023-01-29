@@ -27,18 +27,39 @@ std::vector<std::string> classification(std::string str){
   return output;
 }
 
-void count(){
-  
-  return;
+void count(int idx,std::vector<std::string> input,std::vector<std::string>& ans){
+  int len{(int)input.size()};
+  if(len==0 || idx>=len){ return; }
+
+  if((int)ans.size()==0){ ans.push_back(""); }
+
+  std::string temp = input[idx];
+  std::vector<std::string> vec{};
+    for(auto str:ans){
+      for(int i=0;i<=(int)str.length();i++){
+        if(i==0){ vec.push_back(temp+str); }
+        else if(i==(int)str.length()){ vec.push_back(str+temp); }
+        else{
+          std::string ss = str.substr(0,i) + temp + str.substr(i,((int)str.length())-1);
+          vec.push_back(ss);
+        }
+      }
+    } 
+    ans = vec;
+
+  count(idx+1,input,ans);
 }
+
+
 
 int main(){
   std::string str = "aabccc";
   int len{static_cast<int>(str.length())};
+  std::vector<std::string> output{};
+  output = classification(str);
+
   std::vector<std::string> ans{};
-  ans = classification(str);
-  
-  count(0,str,ans);
+  count(0,output,ans);
   for(auto s:ans){ std::cout<<s<<", "; }
   std::cout<<std::endl;
   
